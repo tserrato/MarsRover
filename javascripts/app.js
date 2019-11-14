@@ -1,77 +1,106 @@
-var rover = {
-  direction : "N",
-  X : 0,
-  Y : 0
+console.log('To move rover input the function move with l, f, or r as its parameters.')
 
+let rover = {
+  direction: 'N',
+  X: 0,
+  Y: 0,
+  travelLog: [],
 };
+
+
+
 function turnLeft(rover){
   console.log("turnLeft was called!");
-  switch(rover.direction){
+
+  switch(rover.direction) {
     case 'N':
-      rover.direction = "W";
-      break;
-    case 'E':
-      rover.direction = "N";
-      break;
-    case 'S':
-      rover.direction = "E";
+      rover.direction = 'W';
       break;
     case 'W':
-      rover.direction = "S";
+      rover.direction = 'S';
       break;
-    
-    }  
-
+    case 'S':
+      rover.direction = 'E';
+      break;
+    case 'E':
+      rover.direction = 'N';
+      break;
   }
-
+  console.log('Current direction is: ' + rover.direction)
+}
 
 function turnRight(rover){
   console.log("turnRight was called!");
-  switch(rover.direction){
+
+  switch(rover.direction) {
     case 'N':
-      rover.direction = "E";
-      break;
-    case 'E':
-      rover.direction = "S";
-      break;
-    case 'S':
-      rover.direction = "W";
+      rover.direction = 'E';
       break;
     case 'W':
-      rover.direction = "N";
+      rover.direction = 'N';
       break;
-    
-    }
+    case 'S':
+      rover.direction = 'W';
+      break;
+    case 'E':
+      rover.direction = 'S';
+      break;
+  }
+  console.log('Current direction is: ' + rover.direction)
 }
 
 function moveForward(rover){
-  console.log("moveForward was called");
-  switch(rover.direction){
-    case direction === "N":
-      rover.Y = Y - 1;
+  console.log("moveForward was called")
+
+  switch(rover.direction) {
+    case 'N':
+      rover.Y --;
       break;
-    case direction === 'E':
-      rover.X = X + 1;
+    case 'E':
+      rover.X ++;
       break;
-    case direction === 'S':
-      rover.Y = Y + 1;
+    case 'S':
+      rover.Y ++;
       break;
-    case direction === 'W':
-      rover.X = X - 1;
+    case 'W':
+      rover.X --;
       break;
-    
-    }
+  }
+
+  borders(rover.X, rover.Y);
+
+  let position = [rover.X, rover.Y];
+  console.log('Current position: ' + position);
+  rover.travelLog.push(position);
+  console.log(rover.travelLog);
 }
 
-function move(command){
-  switch(command){
-    case f :
-      moveForward();
-      break;
-    case r :
-      turnRight();
-      break;
-    case l :
-      turnLeft();    
+function move (commands) {
+  commands = commands.split('');
+
+  commands.forEach(command => {
+    if(command === 'f') {
+      moveForward(rover);
+    }
+    else if(command === 'l') {
+      turnLeft(rover);
+    }
+    else if(command === 'r') {
+      turnRight(rover);
+    }
+    else {
+      console.log(command + ' is not a command, please enter l, r, or f.');
+    }
+  });
+}
+
+function borders(positionx, positiony) {
+  if(positionx < 0) {
+    console.log('Border reached!');
+    rover.X = 0;
+  }
+  if(positiony < 0) {
+    console.log('Border reached!');
+    rover.Y = 0;
   }
 }
